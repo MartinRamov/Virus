@@ -14,5 +14,5 @@
 На секоја класа, функција и промелива и е доделен xml summary  кој јасно ја опишува нивната функција и примена.
 
 <p align="center">
-  <img src="Desktop\blue.png" width="350"/>
+  <img src="Virus\blue.png" width="350"/>
 </p>
