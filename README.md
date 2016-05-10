@@ -14,5 +14,9 @@
 На секоја класа, функција и промелива и е доделен xml summary  кој јасно ја опишува нивната функција и примена.
 
 <p align="center">
-  <img src="Screenshots\igra.png" width="100" heught="100"/>
+  <img src="Screenshots\Pocetno meni.png"/>
+  <img src="Screenshots\colorchange.png"/>
+  <img src="Screenshots\ending dialog.png"/>
+  <img src="Screenshots\igra.png"/>
+  <img src="Screenshots\score board.png"/>
 </p>
