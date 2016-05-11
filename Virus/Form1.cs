@@ -40,20 +40,50 @@ namespace Virus
             {5, Color.FromArgb(255, 153, 153) }
         };
         private Scene scene;
+        /// <summary>
+        /// Карактерот кој треба да се отстрани од сцена (Catch)
+        /// </summary>
         private Character kill;
         private Timer t1;
         private Timer t2;
+        /// <summary>
+        /// Димензии на формата
+        /// </summary>
         private float width;
         private float height;
+        /// <summary>
+        /// Променливата start укажува дали е кликнато на копчето пауза или е PlayMode
+        /// </summary>
         private bool start;
         private bool playMode;
+        /// <summary>
+        /// Променливата soundPlay инцицира дали корисникот сака звук
+        /// </summary>
         private bool soundPlay;
+        /// <summary>
+        /// Број на секунди на игра
+        /// </summary>
         private int vreme;
+        /// <summary>
+        /// Број на поени
+        /// </summary>
         private int poeni;
+        /// <summary>
+        /// Плеери за три различни звуци
+        /// Почеток на нова игра
+        /// Промена на Карактер индикатор
+        /// Звук при клик на соодветниот карактер
+        /// </summary>
         private SoundPlayer soundNewGame;
         private SoundPlayer soundChange;
         private SoundPlayer soundKill;
-        private WMPLib.WindowsMediaPlayer wplayer; 
+        /// <summary>
+        /// Плеер за background музика
+        /// </summary>
+        private WMPLib.WindowsMediaPlayer wplayer;
+        /// <summary>
+        /// Лабели за поени и време
+        /// </summary>
         private Label lbl1;
         private Label lbl2;
 
@@ -80,7 +110,9 @@ namespace Virus
         {
             begin();
         }
-
+        /// <summary>
+        /// ФУНКЦИЈАТА ГИ ОДРЕДУВА ПОЧЕТНИТЕ УСЛОВИ НА ИГРАТА
+        /// </summary>
         private void begin()
         {
             poeni = 0;
@@ -106,7 +138,12 @@ namespace Virus
 
             StartGame();
         }
-
+        /// <summary>
+        /// ФУНКЦИЈА НА ЧИЈ ТАКТ СЕ ГЕНЕРИРААТ НОВИ КАРАКТЕРИ
+        /// И НОВИ КАРАКТЕРИ ИНДИКАТОРИ (ВО ЦРВЕНОТО ПОЛЕ)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void t1_Tick(object sender, EventArgs e)
         {
             if (wplayer.playState != WMPPlayState.wmppsPlaying && soundPlay)
@@ -124,14 +161,22 @@ namespace Virus
             Controls.Add(lbl1);
             Invalidate(true);
         }
-
+        /// <summary>
+        /// ФУНКЦИЈА КОЈА НА СЕКОИ 100 ms ИСЦРТУВА КАРАКТЕРИ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void t2_Tick(object sender, EventArgs e)
         {
             scene.MoveCharacters(width, height);
             Invalidate(true);
             checkNumber();
         }
-
+        /// <summary>
+        /// ФУНКЦИЈА ЗА ИСЦРТУВАЊЕ НА ФОРМАТА
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             if (start || playMode)
@@ -163,18 +208,24 @@ namespace Virus
                 p.Dispose();
             }
         }
-
+        /// <summary>
+        /// ФУНКЦИЈАТА ГЕНЕРИРА РАНДОМ КАРАКТЕРИ
+        /// </summary>
+        /// <param name="a"></param>
         private void Randomizer(int a)
         {
             Random r = new Random();
             Current = (TYPE)r.Next(6);
             String url = characterSet[Current.ToString()];
             Character c;
+            ///Ако а е еден значи се генерира карактер кој се движи
             if (a == 1)
             {
                 c = new Character(url);
                 scene.addCharacter(c);
             }
+            ///а=2 значи дека се генерира карактер индикатор
+            ///(карактер во црвеното поле кој укажува кој е карактерот кој треба да се фати (Catch the virus)
             if (a == 2)
             {
                 c = new Character(url, 310, 380, 0);
@@ -189,7 +240,9 @@ namespace Virus
             if (WindowState == FormWindowState.Maximized)
                 Invalidate(true);
         }
-
+        /// <summary>
+        /// ФУНКЦИЈАТА ГЕНЕРИРА 6 ПОЧЕТНИ КАРАКТЕРИ ОД СЕКОЈ ВИД ПО ЕДЕН
+        /// </summary>
         public void StartGame()
         {
             String url;
@@ -208,7 +261,11 @@ namespace Virus
         {
             Close();
         }
-
+        /// <summary>
+        /// ФУНКЦИЈА КОЈА ГО ВКЛУЧУВА ИЛИ ИСКЛУЧУВА ЗВУКОТ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSound_Click(object sender, EventArgs e)
         {
             if (soundPlay == true)
@@ -226,7 +283,13 @@ namespace Virus
                 btnSound.ForeColor = Color.Black;
             }
         }
-
+        /// <summary>
+        /// ФУНКЦИЈАТА СЕ АКТИВИРА НА КЛИК НА СЦЕНА
+        /// ПРОВЕРУВА ДАЛИ Е КЛИКНАТО НА КАРАКТЕРОТ КОЈ ТРЕБА СЕ СЕ ОТСТРАНИ ОД СЦЕНАТА
+        /// НА КЛИК НА ПОГРЕШЕН КАРАКТЕР СЕ ПОЈАВУВА НОВ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             if (start)
@@ -255,7 +318,10 @@ namespace Virus
                 checkNumber();
             }
         }
-
+        /// <summary>
+        /// OВАА ФУНКЦИЈА ГО ПРОВЕРУВА БРОЈОТ НА КАРАКТЕРИ НА СЦЕНА
+        /// ОДРЕДУВА СЛЕДЕ ЧЕКОР ПО ЗАВРШУВАЊЕ СО ИГРАТА
+        /// </summary>
         private void checkNumber()
         {
             if (scene.Characters.Count() > 29)
@@ -305,7 +371,12 @@ namespace Virus
                 }
             }
         }
-
+        /// <summary>
+        /// ОВА ФУНКЦИЈА ЈА СТОПИРА ПОЗАДИНСКАТА МУЗИКА
+        /// СЕ АКТИВИРА НА КЛИК НА КОПЧЕТО P ОД ТАСТАТУРА
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (playMode && e.KeyCode == Keys.P)

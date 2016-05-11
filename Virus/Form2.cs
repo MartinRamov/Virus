@@ -9,6 +9,9 @@ using System.Windows.Forms;
 
 namespace Virus
 {
+    /// <summary>
+    /// Оваа форма ги прикажува инструкциите за игра
+    /// </summary>
     public partial class Form2 : Form
     {
         public Form2()

@@ -9,16 +9,39 @@ namespace Virus
 {
     public class Character
     {
+        /// <summary>
+        /// URL до слика за карактер
+        /// </summary>
         public string Url { get; set; }
+        /// <summary>
+        /// Координати на исцртување
+        /// </summary>
         public float CoordinateX { get; set; }
         public float CoordinateY { get; set; }
-
+        /// <summary>
+        /// Агол под кој ќе се придвижува карактерот
+        /// </summary>
         private double angle;
+        /// <summary>
+        /// Придвижување по x и y соодветно
+        /// </summary>
         private float velocityX;
         private float velocityY;
+        /// <summary>
+        /// Брзина на движење
+        /// </summary>
         private int Velocity;
         private Random r;
-
+        /// <summary>
+        /// Овој конструктор се повикува при генерирање на карактер индикатор
+        /// Овој карактер не треба да се движи па згодно е да се пренесе 0 за агол
+        /// Овој конструктор се користи и при генерирање на почетни карактери
+        /// Инаку рандом би се инстанцирал последователно со исти вредности
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="angle"></param>
         public Character(string url, float x, float y, double angle)
         {
             Url = url;    
@@ -29,7 +52,10 @@ namespace Virus
             CoordinateX = x;
             CoordinateY = y;
         }
-
+        /// <summary>
+        /// Овој конструктор се повикува понатаму за секој карактер во играта
+        /// </summary>
+        /// <param name="url"></param>
         public Character(string url)
         {
             Url = url;
@@ -50,7 +76,11 @@ namespace Virus
             g.DrawImage(bmp, CoordinateX,CoordinateY, 40 , 45);
             bmp.Dispose();
         }
-
+        /// <summary>
+        /// Во оваа функција е имплементирано движењето на карактерите
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         public void Move(float width, float height)
         {
             float nextX = CoordinateX + velocityX;
