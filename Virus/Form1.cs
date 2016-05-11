@@ -58,7 +58,7 @@ namespace Virus
         private Label lbl2;
 
         public Form1()
-        {
+        {   
             InitializeComponent();
             height = this.Height - 150;
             width = this.Width - 18;
@@ -73,7 +73,7 @@ namespace Virus
             soundKill = new SoundPlayer("sound1.wav");
             wplayer = new WMPLib.WindowsMediaPlayer();
             wplayer.URL = "Acoustic Background Music.mp3";
-            poeni = 0;
+            poeni = 0;    
         }
 
         private void btnNewGame_Click(object sender, EventArgs e)
@@ -148,12 +148,12 @@ namespace Virus
                 lbl2 = new Label();
                 lbl1.BackColor = c;
                 lbl2.BackColor = c;
-                lbl1.Width = 150;
-                lbl2.Width = 150;
-                lbl1.Location = new Point(100, 380);
-                lbl2.Location = new Point(450, 380);
-                lbl1.Font = new Font("Arial", 18, FontStyle.Bold);
-                lbl2.Font = new Font("Arial", 18, FontStyle.Bold);
+                lbl1.Width = 200;
+                lbl2.Width = 200;
+                lbl1.Location = new Point(50, 380);
+                lbl2.Location = new Point(430, 380);
+                lbl1.Font = new Font("Castellar", 18, FontStyle.Bold);
+                lbl2.Font = new Font("Castellar", 18, FontStyle.Bold);
                 lbl1.Text = String.Format("Time: {0:00}:{1:00}", vreme / 60, vreme % 60);
                 lbl2.Text = "Points: " + poeni.ToString();
                 Controls.Add(lbl1);
@@ -406,7 +406,13 @@ namespace Virus
                 scoreBoard.lbScores.Text = bestScores.ToString();
                 scoreBoard.Show();
             }
-        } 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form2 i = new Form2();
+            i.ShowDialog();    
+        }
     }
 }
 
