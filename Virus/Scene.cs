@@ -8,13 +8,19 @@ namespace Virus
 {
     public class Scene
     {
+        /// <summary>
+        /// Листа од карактери присутни на сцената
+        /// </summary>
         public List<Character> Characters { set; get; }
 
         public Scene()
         {
             Characters = new List<Character>();
         }
-
+        /// <summary>
+        /// МЕТОД ЗА ДОДАВАЊЕ КАРАКТЕРИ
+        /// </summary>
+        /// <param name="c"></param>
         public void addCharacter(Character c)
         {
             Characters.Add(c);
@@ -27,7 +33,11 @@ namespace Virus
                 c.Draw(g);
             }
         }
-
+        /// <summary>
+        /// МЕТОД КОИ ПРЕДИЗВИКУВА КАРАКТЕРИТЕ ДА СЕ ДВИЖАТ
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         public void MoveCharacters(float width, float height)
         {
             foreach(Character c in Characters)
