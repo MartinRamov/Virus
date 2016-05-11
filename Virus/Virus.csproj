@@ -90,9 +90,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bordo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="bordo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -132,9 +129,6 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image1.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\12-game-background-mesh-cloud.jpg" />
