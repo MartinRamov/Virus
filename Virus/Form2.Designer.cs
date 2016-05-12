@@ -36,7 +36,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Virus.Properties.Resources.Instrukcii;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(625, 437);
+            this.ClientSize = new System.Drawing.Size(580, 437);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "Form2";
             this.Text = "Instructions";
             this.ResumeLayout(false);

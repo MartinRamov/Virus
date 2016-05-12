@@ -137,3 +137,11 @@ C:\Users\User\Virus-master\Virus\bin\Debug\Virus.exe
 C:\Users\User\Virus-master\Virus\bin\Debug\Virus.pdb
 C:\Users\User\Virus-master\Virus\bin\Debug\Interop.WMPLib.dll
 C:\Users\User\Virus-master\Virus\bin\Debug\AxInterop.WMPLib.dll
+C:\Users\Win8.1\Desktop\Virus\Virus\Virus\obj\Debug\Interop.WMPLib.dll
+C:\Users\Win8.1\Desktop\Virus\Virus\Virus\obj\Debug\AxInterop.WMPLib.dll
+C:\Users\Win8.1\Desktop\Virus\Virus\Virus\obj\Debug\Virus.csproj.ResolveComReference.cache
+C:\Users\Win8.1\Desktop\Virus\Virus\Virus\bin\Debug\Interop.WMPLib.dll
+C:\Users\Win8.1\Desktop\Virus\Virus\Virus\bin\Debug\AxInterop.WMPLib.dll
+C:\Users\Win8.1\Desktop\Virus\Virus\Virus\obj\Debug\Virus.Form2.resources
+C:\Users\Win8.1\Desktop\Virus\Virus\Virus\obj\Debug\Virus.SaveScore.resources
+C:\Users\Win8.1\Desktop\Virus\Virus\Virus\obj\Debug\Virus.ScoreBoard.resources
