@@ -14,9 +14,9 @@
 На секоја класа, функција и промелива и е доделен xml summary  кој јасно ја опишува нивната функција и примена.</br></br>
 </ol>
 <p align="center">
-  <img src="Screenshots\Pocetno meni.png"/>
-  <img src="Screenshots\colorchange.png"/>
-  <img src="Screenshots\ending dialog.png"/>
-  <img src="Screenshots\igra.png"/>
-  <img src="Screenshots\score board.png"/>
+  <img src="Screenshots\Start.png"/>
+  <img src="Screenshots\Instructions.png"/>
+  <img src="Screenshots\igra dialog.png"/>
+  <img src="Screenshots\SaveScrore.png"/>
+  <img src="Screenshots\ScoreBoard.png"/>
 </p>
