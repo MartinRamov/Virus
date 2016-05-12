@@ -16,7 +16,7 @@
 <p align="center">
   <img src="Screenshots\Start.png"/>
   <img src="Screenshots\Instructions.png"/>
-  <img src="Screenshots\igra dialog.png"/>
-  <img src="Screenshots\SaveScrore.png"/>
+  <img src="Screenshots\igra.png"/>
+  <img src="Screenshots\SaveScore.png"/>
   <img src="Screenshots\ScoreBoard.png"/>
 </p>
