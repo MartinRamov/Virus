@@ -11,25 +11,21 @@ namespace Virus
 {
     public partial class Form1 : Form
     {
-        private enum TYPE
+        /// <summary>
+        /// Мапирање на URL локацијата на сликите од карактерите според нивното име
+        /// </summary>
+        private static Dictionary<int, string> characterSet = new Dictionary<int, string>
         {
-            blue,
-            orange,
-            bordo,
-            green,
-            yellow,
-            red
-        }
-        private TYPE Current { set; get; }
-        private static Dictionary<string, string> characterSet = new Dictionary<string, string>
-        {
-            {"blue", "Virus.blue.png" },
-            {"orange", "Virus.orange.png" },
-            {"bordo", "Virus.bordo.png" },
-            {"green", "Virus.green.png" },
-            {"yellow", "Virus.yellow.png" },
-            {"red", "Virus.red.png" }
+            {0, "Virus.blue.png" },
+            {1, "Virus.orange.png" },
+            {2, "Virus.bordo.png" },
+            {3, "Virus.green.png" },
+            {4, "Virus.yellow.png" },
+            {5, "Virus.red.png" }
         };
+        /// <summary>
+        /// Мапирање на бојата на позадината во зависност од бројот на освоени поени
+        /// </summary>
         private static Dictionary<int, Color> colorSet = new Dictionary<int, Color>
         {
             {0, Color.Beige },
@@ -39,6 +35,9 @@ namespace Virus
             {4, Color.BlanchedAlmond },
             {5, Color.FromArgb(255, 153, 153) }
         };
+        /// <summary>
+        /// Сцена во која шти се наоѓаат сите присутни карактери
+        /// </summary>
         private Scene scene;
         /// <summary>
         /// Карактерот кој треба да се отстрани од сцена (Catch)
@@ -71,8 +70,8 @@ namespace Virus
         /// <summary>
         /// Плеери за три различни звуци
         /// Почеток на нова игра
-        /// Промена на Карактер индикатор
-        /// Звук при клик на соодветниот карактер
+        /// Промена на карактер индикатор
+        /// Звук при клик (уништување) на соодветниот карактер
         /// </summary>
         private SoundPlayer soundNewGame;
         private SoundPlayer soundChange;
@@ -110,6 +109,7 @@ namespace Virus
         {
             begin();
         }
+
         /// <summary>
         /// ФУНКЦИЈАТА ГИ ОДРЕДУВА ПОЧЕТНИТЕ УСЛОВИ НА ИГРАТА
         /// </summary>
@@ -138,9 +138,26 @@ namespace Virus
 
             StartGame();
         }
+
+        /// <summary>
+        /// ФУНКЦИЈАТА ГЕНЕРИРА 6 ПОЧЕТНИ КАРАКТЕРИ ОД СЕКОЈ ВИД ПО ЕДЕН
+        /// </summary>
+        public void StartGame()
+        {
+            String url;
+            Random pom = new Random();
+            for (int i = 0; i <= 5; ++i)
+            {
+                url = characterSet[i];
+                Character c = new Character(url, pom.Next(300), pom.Next(300), pom.NextDouble() * 2 * Math.PI);
+                scene.addCharacter(c);
+            }
+            Randomizer(2);
+        }
+
         /// <summary>
         /// ФУНКЦИЈА НА ЧИЈ ТАКТ СЕ ГЕНЕРИРААТ НОВИ КАРАКТЕРИ
-        /// И НОВИ КАРАКТЕРИ ИНДИКАТОРИ (ВО ЦРВЕНОТО ПОЛЕ)
+        /// И НОВ КАРАКТЕР ИНДИКАТОР ВО ЦРВЕНОТО ПОЛЕ (ИНДИКАТОРОТ СЕ МЕНУВА НА СЕКОИ 2 СЕКУНДИ)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -161,8 +178,9 @@ namespace Virus
             Controls.Add(lbl1);
             Invalidate(true);
         }
+
         /// <summary>
-        /// ФУНКЦИЈА КОЈА НА СЕКОИ 100 ms ИСЦРТУВА КАРАКТЕРИ
+        /// ФУНКЦИЈА КОЈА НА СЕКОИ 100 ms ГИ ПОМЕСТУВА И ИСЦРТУВА КАРАКТЕРИТЕ 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -172,6 +190,7 @@ namespace Virus
             Invalidate(true);
             checkNumber();
         }
+
         /// <summary>
         /// ФУНКЦИЈА ЗА ИСЦРТУВАЊЕ НА ФОРМАТА
         /// </summary>
@@ -208,24 +227,28 @@ namespace Virus
                 p.Dispose();
             }
         }
+
         /// <summary>
         /// ФУНКЦИЈАТА ГЕНЕРИРА РАНДОМ КАРАКТЕРИ
         /// </summary>
         /// <param name="a"></param>
         private void Randomizer(int a)
         {
-            Random r = new Random();
-            Current = (TYPE)r.Next(6);
-            String url = characterSet[Current.ToString()];
             Character c;
-            ///Ако а е еден значи се генерира карактер кој се движи
+            Random r = new Random();
+
+            //Се генерира рандом вредност од 0 до 5
+            //Според мапирањето во characterSet, се одредува кој карактер (URL) ќе се појави
+            String url = characterSet[r.Next(6)];         
+
+            ///Ако параметарот а е еден значи се генерира карактер кој се движи
             if (a == 1)
             {
                 c = new Character(url);
                 scene.addCharacter(c);
             }
-            ///а=2 значи дека се генерира карактер индикатор
-            ///(карактер во црвеното поле кој укажува кој е карактерот кој треба да се фати (Catch the virus)
+            ///Ако параметарот а е 2 значи дека се генерира карактер индикатор
+            ///(карактер во црвеното поле кој укажува кој е карактерот кој треба да се уништи (Virus)
             if (a == 2)
             {
                 c = new Character(url, 310, 380, 0);
@@ -233,34 +256,25 @@ namespace Virus
             }
         }
 
+        /// <summary>
+        /// ФУНКЦИЈАТА СО КОЈА СЕ ПОВИКУВА ПОВТОРНО ИСЦРТУВАЊЕ НА ФОРМАТА ОТКАКО Е МАКСИМИЗИРАНА
+        /// </summary>
         private void Form1_Resize(object sender, EventArgs e)
         {
-            height = this.Height - 150;
-            width = this.Width - 18;
             if (WindowState == FormWindowState.Maximized)
                 Invalidate(true);
         }
-        /// <summary>
-        /// ФУНКЦИЈАТА ГЕНЕРИРА 6 ПОЧЕТНИ КАРАКТЕРИ ОД СЕКОЈ ВИД ПО ЕДЕН
-        /// </summary>
-        public void StartGame()
-        {
-            String url;
-            Random pom = new Random();
-            for (int i = 0; i <= 5; ++i)
-            {
-                Current = (TYPE)i;
-                url = characterSet[Current.ToString()];
-                Character c = new Character(url, pom.Next(300), pom.Next(300), pom.NextDouble() * 2 * Math.PI);
-                scene.addCharacter(c);
-            }
-            Randomizer(2);
-        }
 
+        /// <summary>
+        /// ФУНКЦИЈА КОЈА СЕ АКТИВИРА СО КЛИК НА КОПЧЕТО Exit И СЛУЖИ ЗА ИСКЛУЧУВАЊЕ НА ИГРАТА
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnExit_Click(object sender, EventArgs e)
         {
             Close();
         }
+
         /// <summary>
         /// ФУНКЦИЈА КОЈА ГО ВКЛУЧУВА ИЛИ ИСКЛУЧУВА ЗВУКОТ
         /// </summary>
@@ -283,10 +297,11 @@ namespace Virus
                 btnSound.ForeColor = Color.Black;
             }
         }
+
         /// <summary>
         /// ФУНКЦИЈАТА СЕ АКТИВИРА НА КЛИК НА СЦЕНА
-        /// ПРОВЕРУВА ДАЛИ Е КЛИКНАТО НА КАРАКТЕРОТ КОЈ ТРЕБА СЕ СЕ ОТСТРАНИ ОД СЦЕНАТА
-        /// НА КЛИК НА ПОГРЕШЕН КАРАКТЕР СЕ ПОЈАВУВА НОВ
+        /// ПРОВЕРУВА ДАЛИ Е КЛИКНАТО НА КАРАКТЕРОТ КОЈ ТРЕБА СЕ СЕ ОТСТРАНИ ОД СЦЕНАТА (УНИШТИ)
+        /// ДОКОЛКУ СЕ КЛИКНЕ НА ПОГРЕШЕН КАРАКТЕР (РАЗЛИЧЕН ОД ИНДИКАТОРОТ), СЕ ПОЈАВУВА НОВ КАРАКТЕР
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -318,9 +333,11 @@ namespace Virus
                 checkNumber();
             }
         }
+
         /// <summary>
         /// OВАА ФУНКЦИЈА ГО ПРОВЕРУВА БРОЈОТ НА КАРАКТЕРИ НА СЦЕНА
-        /// ОДРЕДУВА СЛЕДЕ ЧЕКОР ПО ЗАВРШУВАЊЕ СО ИГРАТА
+        /// ОТКАКО НА СЦЕНАТА ЌЕ СЕ ПОЈАВАТ 30 КАРАКТЕРИ, ИГРАТА ЗАВРШУВА
+        /// ОДРЕДУВА СЛЕДЕН ЧЕКОР ПО ЗАВРШУВАЊЕ НА ИГРАТА
         /// </summary>
         private void checkNumber()
         {
@@ -330,9 +347,10 @@ namespace Virus
                 t2.Stop();
                 wplayer.controls.stop();
                 SaveScore saveScore = new SaveScore();
+                DialogResult result = saveScore.ShowDialog();
                 scene.Characters.Clear();
                 scene = new Scene();
-                DialogResult result = saveScore.ShowDialog();             
+                             
                 if (saveScore.Save)
                 {
                     string text = saveScore.Name;
@@ -371,9 +389,10 @@ namespace Virus
                 }
             }
         }
+
         /// <summary>
-        /// ОВА ФУНКЦИЈА ЈА СТОПИРА ПОЗАДИНСКАТА МУЗИКА
-        /// СЕ АКТИВИРА НА КЛИК НА КОПЧЕТО P ОД ТАСТАТУРА
+        /// ОВАА ФУНКЦИЈА СЕ АКТИВИРА НА КЛИК НА КОПЧЕТО П (Р) ОД ТАСТАТУРА
+        /// СЛУЖИ ЗА ПАУЗИРАЊЕ/ПРОДОЛЖУВАЊЕ НА ИГРАТА
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -410,12 +429,11 @@ namespace Virus
             if (System.IO.File.ReadAllLines(@"Achievments.txt") != null)
             {
                 string[] lines = System.IO.File.ReadAllLines(@"Achievments.txt");
-                string txt = "";
                 ScoreBoard scoreBoard = new ScoreBoard();
                 string[] names = new string[lines.Length];
                 string[] scores = new string[lines.Length];
 
-                ////Резултатите во .txt во Bin се запишуваат во Формат
+                ////Резултатите во Achievments.txt во Bin се запишуваат во Формат
                 ///ИМЕ НА ИГРАЧ
                 /// РЕЗУЛТАТ
                 /// Парен индекс значи име
@@ -427,7 +445,6 @@ namespace Virus
                 {
                     if (i % 2 == 0)
                     {
-
                         names[n] = lines[i] + "\n";
                         n++;
                     }
@@ -479,6 +496,11 @@ namespace Virus
             }
         }
 
+        /// <summary>
+        /// ФОРМА КОЈА ГИ ПРИКАЖУВА ИНСТРУКЦИИТЕ НА ИГРАТА
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             Form2 i = new Form2();

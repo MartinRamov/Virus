@@ -42,9 +42,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(12, 60);
+            this.label1.Location = new System.Drawing.Point(9, 49);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 24);
+            this.label1.Size = new System.Drawing.Size(59, 19);
             this.label1.TabIndex = 0;
             this.label1.Tag = "";
             this.label1.Text = "Name:";
@@ -54,9 +55,10 @@
             this.btnSaveScore.BackColor = System.Drawing.Color.Thistle;
             this.btnSaveScore.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSaveScore.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnSaveScore.Location = new System.Drawing.Point(88, 91);
+            this.btnSaveScore.Location = new System.Drawing.Point(66, 74);
+            this.btnSaveScore.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSaveScore.Name = "btnSaveScore";
-            this.btnSaveScore.Size = new System.Drawing.Size(266, 39);
+            this.btnSaveScore.Size = new System.Drawing.Size(200, 32);
             this.btnSaveScore.TabIndex = 1;
             this.btnSaveScore.Text = "Save my score";
             this.btnSaveScore.UseVisualStyleBackColor = false;
@@ -64,9 +66,10 @@
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(88, 63);
+            this.tbName.Location = new System.Drawing.Point(66, 51);
+            this.tbName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(266, 22);
+            this.tbName.Size = new System.Drawing.Size(200, 20);
             this.tbName.TabIndex = 2;
             // 
             // btnRetry
@@ -75,9 +78,10 @@
             this.btnRetry.CausesValidation = false;
             this.btnRetry.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnRetry.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnRetry.Location = new System.Drawing.Point(88, 136);
+            this.btnRetry.Location = new System.Drawing.Point(66, 110);
+            this.btnRetry.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnRetry.Name = "btnRetry";
-            this.btnRetry.Size = new System.Drawing.Size(120, 39);
+            this.btnRetry.Size = new System.Drawing.Size(90, 32);
             this.btnRetry.TabIndex = 3;
             this.btnRetry.Text = "Retry";
             this.btnRetry.UseVisualStyleBackColor = false;
@@ -87,11 +91,13 @@
             // 
             this.btnCancel.BackColor = System.Drawing.Color.Black;
             this.btnCancel.CausesValidation = false;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnCancel.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnCancel.Location = new System.Drawing.Point(227, 136);
+            this.btnCancel.Location = new System.Drawing.Point(170, 110);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(127, 39);
+            this.btnCancel.Size = new System.Drawing.Size(95, 32);
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -103,15 +109,18 @@
             // 
             // SaveScore
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AcceptButton = this.btnSaveScore;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.ClientSize = new System.Drawing.Size(393, 201);
+            this.CancelButton = this.btnCancel;
+            this.ClientSize = new System.Drawing.Size(295, 163);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnRetry);
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.btnSaveScore);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "SaveScore";
             this.Text = "SaveScore";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();

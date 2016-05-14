@@ -17,6 +17,7 @@ namespace Virus
         {
             Characters = new List<Character>();
         }
+
         /// <summary>
         /// МЕТОД ЗА ДОДАВАЊЕ КАРАКТЕРИ
         /// </summary>
@@ -26,6 +27,10 @@ namespace Virus
             Characters.Add(c);
         }
 
+        /// <summary>
+        /// МЕТОД ЗА ИСЦРТУВАЊЕ НА КАРАКТЕРИТЕ КОИ СЕ ПРИСУТНИ НА СЦЕНАТА
+        /// </summary>
+        /// <param name="g"></param>
         public void Draw(Graphics g)
         {
             foreach(Character c in Characters)

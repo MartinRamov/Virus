@@ -13,6 +13,7 @@ namespace Virus
     {
         public string Name { set; get; }
         public bool Save { set; get; }
+
         public SaveScore()
         {
             InitializeComponent();
@@ -27,8 +28,7 @@ namespace Virus
         private void btnSaveScore_Click(object sender, EventArgs e)
         {
             if (tbName.Text.Trim().Length == 0)
-            {
-                
+            {             
                 errorProvider1.SetError(tbName, "Внесете го вашето име");
             }
             else
