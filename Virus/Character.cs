@@ -33,10 +33,9 @@ namespace Virus
         private int Velocity;
         private Random r;
         /// <summary>
-        /// Овој конструктор се повикува при генерирање на карактер индикатор
-        /// Овој карактер не треба да се движи па згодно е да се пренесе 0 за агол
-        /// Овој конструктор се користи и при генерирање на почетни карактери
-        /// Инаку рандом би се инстанцирал последователно со исти вредности
+        /// Овој конструктор се користи при генерирање на почетните 6 карактери
+        /// Овој конструктор се повикува исто така и при генерирање на карактер индикатор
+        /// Овој карактер (индикатор) не треба да се движи па затоа во овој случај се пренесува 0 за агол
         /// </summary>
         /// <param name="url"></param>
         /// <param name="x"></param>
@@ -52,8 +51,9 @@ namespace Virus
             CoordinateX = x;
             CoordinateY = y;
         }
+
         /// <summary>
-        /// Овој конструктор се повикува понатаму за секој карактер во играта
+        /// Овој конструктор се повикува понатаму за секој нов карактер што ќе се појавува на сцената
         /// </summary>
         /// <param name="url"></param>
         public Character(string url)
@@ -68,6 +68,10 @@ namespace Virus
             CoordinateY = r.Next(300);
         }
 
+        /// <summary>
+        /// Во оваа функција се исцртува слика која го претставува карактерот
+        /// </summary>
+        /// <param name="г"></param>
         public void Draw(Graphics g)
         {
             Stream s = this.GetType().Assembly.GetManifestResourceStream(Url);
@@ -76,6 +80,7 @@ namespace Virus
             g.DrawImage(bmp, CoordinateX,CoordinateY, 40 , 45);
             bmp.Dispose();
         }
+
         /// <summary>
         /// Во оваа функција е имплементирано движењето на карактерите
         /// </summary>
