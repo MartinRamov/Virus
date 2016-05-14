@@ -492,7 +492,7 @@ namespace Virus
                 }
                 scoreBoard.lbPlayers.Text = bestNames.ToString();
                 scoreBoard.lbScores.Text = bestScores.ToString();
-                scoreBoard.Show();
+                scoreBoard.ShowDialog();
             }
         }
 
