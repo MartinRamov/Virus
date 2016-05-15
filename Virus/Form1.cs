@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Text;
@@ -14,14 +15,14 @@ namespace Virus
         /// <summary>
         /// Мапирање на URL локацијата на сликите од карактерите според нивното име
         /// </summary>
-        private static Dictionary<int, string> characterSet = new Dictionary<int, string>
+        private static Dictionary<int, System.Drawing.Image> characterSet = new Dictionary<int, System.Drawing.Image>
         {
-            {0, "Virus.blue.png" },
-            {1, "Virus.orange.png" },
-            {2, "Virus.bordo.png" },
-            {3, "Virus.green.png" },
-            {4, "Virus.yellow.png" },
-            {5, "Virus.red.png" }
+            {0, Properties.Resources.blue },
+            {1, Properties.Resources.orange },
+            {2, Properties.Resources.bordo },
+            {3, Properties.Resources.green },
+            {4, Properties.Resources.yellow },
+            {5, Properties.Resources.red }
         };
         /// <summary>
         /// Мапирање на бојата на позадината во зависност од бројот на освоени поени
@@ -72,23 +73,33 @@ namespace Virus
         /// Почеток на нова игра
         /// Промена на карактер индикатор
         /// Звук при клик (уништување) на соодветниот карактер
+        /// Позадинска музика
         /// </summary>
         private SoundPlayer soundNewGame;
         private SoundPlayer soundChange;
         private SoundPlayer soundKill;
-        /// <summary>
-        /// Плеер за background музика
-        /// </summary>
-        private WMPLib.WindowsMediaPlayer wplayer;
+        private SoundPlayer backgroundMusic;
         /// <summary>
         /// Лабели за поени и време
         /// </summary>
         private Label lbl1;
         private Label lbl2;
+        string fileName;
 
         public Form1()
         {   
             InitializeComponent();
+            fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Virus Achievments.txt");
+            using (System.IO.StreamWriter file =
+                    new System.IO.StreamWriter(fileName, true))
+            {
+                if (!File.Exists(fileName))
+                {
+                    File.Create(fileName);
+                    file.WriteLine("Player1");
+                    file.WriteLine(0);
+                }
+            }
             height = this.Height - 150;
             width = this.Width - 18;
             DoubleBuffered = true;
@@ -97,12 +108,12 @@ namespace Virus
             start = false;
             playMode = false;
             soundPlay = true;
-            soundNewGame = new SoundPlayer("sound4.wav");
-            soundChange = new SoundPlayer("sound2.wav");
-            soundKill = new SoundPlayer("sound1.wav");
-            wplayer = new WMPLib.WindowsMediaPlayer();
-            wplayer.URL = "Acoustic Background Music.mp3";
-            poeni = 0;    
+            soundNewGame = new SoundPlayer(Properties.Resources.sound4);
+            soundChange = new SoundPlayer(Properties.Resources.sound2);
+            soundKill = new SoundPlayer(Properties.Resources.sound1);
+            backgroundMusic = new SoundPlayer(Properties.Resources.Acoustic_Background_Music);
+            backgroundMusic.PlayLooping();
+            poeni = 0;
         }
 
         private void btnNewGame_Click(object sender, EventArgs e)
@@ -119,8 +130,8 @@ namespace Virus
             vreme = 0;
             if (soundPlay)
             {
+                backgroundMusic.Stop();
                 soundNewGame.Play();
-                wplayer.URL = "Annoying Song.mp3";
             }
             start = true;
             playMode = true;
@@ -144,7 +155,7 @@ namespace Virus
         /// </summary>
         public void StartGame()
         {
-            String url;
+            System.Drawing.Image url;
             Random pom = new Random();
             for (int i = 0; i <= 5; ++i)
             {
@@ -163,8 +174,6 @@ namespace Virus
         /// <param name="e"></param>
         private void t1_Tick(object sender, EventArgs e)
         {
-            if (wplayer.playState != WMPPlayState.wmppsPlaying && soundPlay)
-                wplayer.controls.play();
             ++vreme;
             Randomizer(1);
             if (vreme % 2 == 0)
@@ -239,7 +248,7 @@ namespace Virus
 
             //Се генерира рандом вредност од 0 до 5
             //Според мапирањето во characterSet, се одредува кој карактер (URL) ќе се појави
-            String url = characterSet[r.Next(6)];         
+            System.Drawing.Image url = characterSet[r.Next(6)];         
 
             ///Ако параметарот а е еден значи се генерира карактер кој се движи
             if (a == 1)
@@ -285,14 +294,14 @@ namespace Virus
             if (soundPlay == true)
             {
                 soundPlay = false;
-                wplayer.controls.stop();
+                backgroundMusic.Stop();
                 btnSound.Text = "Sound: Off";
                 btnSound.ForeColor = Color.FromArgb(192, 0, 0);
             }
             else
             {
                 soundPlay = true;
-                wplayer.controls.play();
+                backgroundMusic.PlayLooping();
                 btnSound.Text = "Sound: On";
                 btnSound.ForeColor = Color.Black;
             }
@@ -345,21 +354,22 @@ namespace Virus
             {
                 t1.Stop();
                 t2.Stop();
-                wplayer.controls.stop();
                 SaveScore saveScore = new SaveScore();
                 DialogResult result = saveScore.ShowDialog();
                 scene.Characters.Clear();
                 scene = new Scene();
-                             
                 if (saveScore.Save)
                 {
                     string text = saveScore.Name;
                     string point = poeni.ToString();
                     using (System.IO.StreamWriter file =
-                    new System.IO.StreamWriter(@"Achievments.txt", true))
+                    new System.IO.StreamWriter(fileName, true))
                     {
+                        if (!File.Exists(fileName))
+                            File.Create(fileName);
                         file.WriteLine(text);
                         file.WriteLine(point);
+                        file.Close();
                     }
                 }
                 if (result == System.Windows.Forms.DialogResult.Retry)
@@ -376,13 +386,13 @@ namespace Virus
                     InitializeComponent();
                     if (soundPlay == true)
                     {
-                        wplayer.URL = "Acoustic Background Music.mp3";
+                        backgroundMusic.PlayLooping();
                         btnSound.Text = "Sound: On";
                         btnSound.ForeColor = Color.Black;
                     }
                     else
                     {
-                        wplayer.controls.stop();
+                        backgroundMusic.Stop();
                         btnSound.Text = "Sound: Off";
                         btnSound.ForeColor = Color.FromArgb(192, 0, 0);
                     }
@@ -405,15 +415,12 @@ namespace Virus
                     t1.Stop();
                     t2.Stop();
                     start = false;
-                    wplayer.controls.pause();
                 }
                 else
                 {
                     t1.Start();
                     t2.Start();
                     start = true;
-                    if (soundPlay)
-                        wplayer.controls.play();
                 }
             }
         }
@@ -425,15 +432,18 @@ namespace Virus
         /// <param name="e"></param>
         private void btnHighscore_Click(object sender, EventArgs e)
         {
-            ////Провери дали во .txt постојат претходни резултати
-            if (System.IO.File.ReadAllLines(@"Achievments.txt") != null)
-            {
-                string[] lines = System.IO.File.ReadAllLines(@"Achievments.txt");
+                System.IO.StreamReader stream = new StreamReader(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Virus Achievments.txt").ToString());
+                string line;
+                List<String> lines = new List<string>();
+                while ((line = stream.ReadLine()) != null)
+                {
+                    lines.Add(line);
+                }
                 ScoreBoard scoreBoard = new ScoreBoard();
-                string[] names = new string[lines.Length];
-                string[] scores = new string[lines.Length];
+                string[] names = new string[lines.Count()];
+                string[] scores = new string[lines.Count()];
 
-                ////Резултатите во Achievments.txt во Bin се запишуваат во Формат
+                ////Резултатите во Virus Achievments.txt во Application data се запишуваат во Формат
                 ///ИМЕ НА ИГРАЧ
                 /// РЕЗУЛТАТ
                 /// Парен индекс значи име
@@ -441,17 +451,20 @@ namespace Virus
                 int n = 0;
                 int s = 0;
 
-                for (int i = 0; i < lines.Length; i++)
+                for (int i = 0; i < lines.Count; i++)
                 {
-                    if (i % 2 == 0)
+                    if (lines[i].Trim() != "")
                     {
-                        names[n] = lines[i] + "\n";
-                        n++;
-                    }
-                    else
-                    {
-                        scores[s] = lines[i] + "\n";
-                        s++;
+                        if (i % 2 == 0)
+                        {
+                            names[n] = lines[i] + "\n";
+                            n++;
+                        }
+                        else
+                        {
+                            scores[s] = lines[i] + "\n";
+                            s++;
+                        }
                     }
                 }
 
@@ -493,7 +506,6 @@ namespace Virus
                 scoreBoard.lbPlayers.Text = bestNames.ToString();
                 scoreBoard.lbScores.Text = bestScores.ToString();
                 scoreBoard.ShowDialog();
-            }
         }
 
         /// <summary>
