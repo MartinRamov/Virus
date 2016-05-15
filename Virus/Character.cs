@@ -12,7 +12,7 @@ namespace Virus
         /// <summary>
         /// URL до слика за карактер
         /// </summary>
-        public string Url { get; set; }
+        public System.Drawing.Image Url { get; set; }
         /// <summary>
         /// Координати на исцртување
         /// </summary>
@@ -41,7 +41,7 @@ namespace Virus
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="angle"></param>
-        public Character(string url, float x, float y, double angle)
+        public Character(System.Drawing.Image url, float x, float y, double angle)
         {
             Url = url;    
             Velocity = 10;
@@ -56,7 +56,7 @@ namespace Virus
         /// Овој конструктор се повикува понатаму за секој нов карактер што ќе се појавува на сцената
         /// </summary>
         /// <param name="url"></param>
-        public Character(string url)
+        public Character(System.Drawing.Image url)
         {
             Url = url;
             r = new Random();
@@ -74,11 +74,7 @@ namespace Virus
         /// <param name="г"></param>
         public void Draw(Graphics g)
         {
-            Stream s = this.GetType().Assembly.GetManifestResourceStream(Url);
-            Bitmap bmp = new Bitmap(s);
-            s.Close();
-            g.DrawImage(bmp, CoordinateX,CoordinateY, 40 , 45);
-            bmp.Dispose();
+            g.DrawImage(Url, CoordinateX,CoordinateY, 40 , 45);
         }
 
         /// <summary>
